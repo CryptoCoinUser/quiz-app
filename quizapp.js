@@ -2,23 +2,23 @@ $(document).ready(function(){
 	/************ GLOBAL VARIABLES **********/
 	var questionArray = [
 		{	theQuestion: 'what is the First Amendment about?',
-			options: ['1) property rights', '2) freedom of speech', '3) bearing arms', '4) no searches or serizures without a warrant'],
+			options: ['property rights', 'freedom of speech', 'bearing arms', 'no searches or serizures without a warrant'],
 			theAnswer: 1 }
 		,
 		{	theQuestion: 'what is the Second Amendment about?',
-			options: ['1) bearing arms', '2) trial by jury', '3) property rights', '4) non-emumerated powers are reserved for the states & people'],
+			options: ['bearing arms', 'trial by jury', 'property rights', 'non-emumerated powers are reserved for the states & people'],
 			theAnswer: 0 }
 		,
 		{	theQuestion: 'what is the Third Amendment about?',
-			options: ['1) trial by jury', '2) jury nullification', '3) against housing soldiers', '4) bearing arms'],
+			options: ['trial by jury', 'jury nullification', 'against housing soldiers', 'bearing arms'],
 			theAnswer: 2 }
 		,
 		{	theQuestion: 'what is the Forth Amendment about?',
-			options: ['1) bearing arms', '2) against unreasonable searches and seizures', '3) freedom of speech', '4) against excessive bail, fines, and punishments'],
+			options: ['bearing arms', 'against unreasonable searches and seizures', 'freedom of speech', 'against excessive bail, fines, and punishments'],
 			theAnswer: 1 }
 		,
 		{	theQuestion: 'what is the Fith Amendment about?',
-			options: ['1) against self-incrimination', '2) bearing arms', '3) against housing of soldiers', '4) jury nullification'],
+			options: ['against self-incrimination', 'bearing arms', 'against housing of soldiers', 'jury nullification'],
 			theAnswer: 0 }
 	]
 
@@ -54,12 +54,10 @@ $(document).ready(function(){
 	/* END ALTERNATING EVENTS */
 
 	function showNextQ(qNum){
-		//console.log("TODO: remove any giveFeedback html");
 		$('#feedback').remove();
-		var nextQHTML = $('<div id="nextQHTML"><div id="tallyGoesHere"></div><div id="questionGoesHere"></div><div id="optionsGoHere"></div></div>')
+		var nextQHTML = $('<div id="nextQHTML"><div id="tallyGoesHere"></div><div id="questionGoesHere"></div><ol id="optionsGoHere"></ol></div>')
 
 
-		//console.log("TODO: have some responces? show a tally");
 		if(userAnswers[0]){
 			var tally = $('<div id="tally">Your score: <span id="numCorrect"></span> out of <span id="qsSoFar"></span> questions</div>');
 			tally.find('span#numCorrect').html(numCorrect);
@@ -68,9 +66,8 @@ $(document).ready(function(){
 		}
 		
 		// check if it's time to stop
-		if(qNumber === 5){
+		if(qNumber === questionArray.length){
 			nextQHTML.find('#questionGoesHere').html("<p class='end'>This concludes the quiz</p><p class='startOver'><a href='index.html'>Start Over</a></p>");
-			//$('#optionsGoHere').remove();
 			$('#buttonsGoHere').remove();
 			$('form').append(nextQHTML);
 			return;
@@ -79,7 +76,6 @@ $(document).ready(function(){
 		var question = $('<p>Question ' + (qNumber + 1) + '</p><h4>' + questionArray[qNumber].theQuestion + '</h4>');
 		nextQHTML.find('#questionGoesHere').html(question);
 		
-		//console.log("TODO: lookup next q's options (aka choices) and place it into #optionsGoHere");
 		var optionsMenu = $('<div id="options">The options are' + arrayIntoRadioButtons(questionArray[qNumber].options) + '</div>');
 		nextQHTML.find('#optionsGoHere').html(optionsMenu);
 		
@@ -92,7 +88,6 @@ $(document).ready(function(){
 
 		/**/
 		$('input[name="option"]').click(function(event){
-   			//event.preventDefault();
    		$('button.giveFeeback').prop("disabled", false); // Element(s) are now enabled.
 });
 		
@@ -101,31 +96,20 @@ $(document).ready(function(){
 
 	function giveFeedback(qNum){
 
-		//console.log("TODO: remove any showNextQ html");
 		$('form #nextQHTML').remove();
 		$('#buttonsGoHere').html('');
 
 		var feedbackHTML = $('<div id="feedback"></div>');
 		
-		
-		//console.log("TODO: give feedback on last question");
-
-		//console.log('qNum is ' + qNum);
-		//console.log('gradeLatestResponse(qNum) is ' + gradeLatestResponse(qNum));
-
 		if(gradeLatestResponse(qNum)){
 			numCorrect++;
 			feedbackHTML.html('Correct');
 		} else{
-			feedbackHTML.html('Wrong, the correct answer is ' + getAnswerString(qNum));
+			feedbackHTML.html('Wrong, <br />the correct answer is <br />' + getAnswerString(qNum));
 		}
 
 		//lauch
 		$('form').prepend(feedbackHTML);
-
-
-		//console.log("TODO: show nextQ button");
-
 		setNextQButtons("Next Question");
 	}
 
@@ -134,7 +118,7 @@ $(document).ready(function(){
 	function arrayIntoRadioButtons(arrayOfOptions){
 		var radioButtons = '';
 		for(var i = 0; i < arrayOfOptions.length; i++){
-			radioButtons += '<br /><input type="radio" name="option" value="' + i + '" required>' + arrayOfOptions[i];
+			radioButtons += '<li><input type="radio" name="option" value="' + i + '" id="option'+ i +'" required><label for="option'+ i +'">' + arrayOfOptions[i] + '</label></li>';
 		}
 		return radioButtons;
 	}
@@ -142,8 +126,10 @@ $(document).ready(function(){
 
 
 	function gradeLatestResponse(qNum){
-		//console.log('gradeLatestResponse: userAnswers[qNum] is ' + userAnswers[qNum] + ' and questionArray[qNum].theAnswer is ' + questionArray[qNum].theAnswer);
-		if(userAnswers[qNum] == questionArray[qNum].theAnswer){ //AKIVA, why is == true, as it should be, and === false?
+		console.log(qNum);
+		console.log(typeof userAnswers[qNum]);
+		console.log(typeof questionArray[qNum].theAnswer);
+		if(Number(userAnswers[qNum]) === questionArray[qNum].theAnswer){ 
 			return true;
 		}else {
 			return false;
@@ -161,11 +147,5 @@ $(document).ready(function(){
 		nextButtons = $('<div id="buttons"><button class="nextQ" type="submit">' + buttonText + '</button></div>');
 		$('#buttonsGoHere').html(nextButtons);
 	}
-
-
-
-
-
-	
 
 }); // document .ready function
