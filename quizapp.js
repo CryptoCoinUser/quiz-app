@@ -10,15 +10,15 @@ $(document).ready(function(){
 			theAnswer: 0 }
 		,
 		{	theQuestion: 'what is the Third Amendment about?',
-			options: ['1) trial by jury', '2) against self-incirimination', '3) jurry nullification', '4) bearing arms'],
+			options: ['1) trial by jury', '2) jury nullification', '3) against housing soldiers', '4) bearing arms'],
 			theAnswer: 2 }
 		,
 		{	theQuestion: 'what is the Forth Amendment about?',
-			options: ['1) bearing arms', '2) against unreasonable searches and seizures', '3) the housing of soldiers', '4) against excessive bail, fines, and punishments'],
+			options: ['1) bearing arms', '2) against unreasonable searches and seizures', '3) freedom of speech', '4) against excessive bail, fines, and punishments'],
 			theAnswer: 1 }
 		,
 		{	theQuestion: 'what is the Fith Amendment about?',
-			options: ['1) against self-incirimination', '2) bearing arms', '3) against housing of soldiers', '4) jury nullification'],
+			options: ['1) against self-incrimination', '2) bearing arms', '3) against housing of soldiers', '4) jury nullification'],
 			theAnswer: 0 }
 	]
 
@@ -87,8 +87,15 @@ $(document).ready(function(){
 		$('form').prepend(nextQHTML);
 
 		//console.log("TODO: show Next giveFeedback button");
-		var feedbackButtons = $('<div id="buttons"><button class="giveFeeback" type="submit">Submit & Get Feedback</button></div>');
+		var feedbackButtons = $('<div id="buttons"><button class="giveFeeback" type="submit" disabled>Submit & Get Feedback</button></div>');
 		$('#buttonsGoHere').html(feedbackButtons); 
+
+		/**/
+		$('input[name="option"]').click(function(event){
+   			//event.preventDefault();
+   		$('button.giveFeeback').prop("disabled", false); // Element(s) are now enabled.
+});
+		
 
 	} // showNextQ
 
@@ -127,7 +134,7 @@ $(document).ready(function(){
 	function arrayIntoRadioButtons(arrayOfOptions){
 		var radioButtons = '';
 		for(var i = 0; i < arrayOfOptions.length; i++){
-			radioButtons += '<br /><input type="radio" name="option" value="' + i + '">' + arrayOfOptions[i];
+			radioButtons += '<br /><input type="radio" name="option" value="' + i + '" required>' + arrayOfOptions[i];
 		}
 		return radioButtons;
 	}
@@ -149,8 +156,10 @@ $(document).ready(function(){
 	}
 
 	function setNextQButtons(buttonText){
-			var nextButtons = $('<div id="buttons"><button class="nextQ" type="submit">' + buttonText + '</button></div>');
-			$('#buttonsGoHere').html(nextButtons);
+		var nextButtons;
+		//console.log('buttonText.toLowerCase(): ' + buttonText.toLowerCase());
+		nextButtons = $('<div id="buttons"><button class="nextQ" type="submit">' + buttonText + '</button></div>');
+		$('#buttonsGoHere').html(nextButtons);
 	}
 
 
