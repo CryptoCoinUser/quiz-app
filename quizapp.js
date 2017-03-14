@@ -76,7 +76,7 @@ $(document).ready(function(){
 			return;
 		}
 
-		var question = $('<p>This is question number ' + (qNumber + 1) + '</p><h4>' + questionArray[qNumber].theQuestion + '</h4>');
+		var question = $('<p>Question ' + (qNumber + 1) + '</p><h4>' + questionArray[qNumber].theQuestion + '</h4>');
 		nextQHTML.find('#questionGoesHere').html(question);
 		
 		//console.log("TODO: lookup next q's options (aka choices) and place it into #optionsGoHere");
