@@ -10,15 +10,15 @@ $(document).ready(function(){
 			theAnswer: 0 }
 		,
 		{	theQuestion: 'what is the Third Amendment about?',
-			options: ['1) trial by jury', '2) self-incirimination', '3) the housing of soldiers', '4) bearing arms'],
+			options: ['1) trial by jury', '2) against self-incirimination', '3) jurry nullification', '4) bearing arms'],
 			theAnswer: 2 }
 		,
 		{	theQuestion: 'what is the Forth Amendment about?',
-			options: ['1) the housing of soldiers', '2) against unreasonable searches and seizures', '3) the housing of soldiers', '4) excessive bail, fines, and punishments'],
+			options: ['1) bearing arms', '2) against unreasonable searches and seizures', '3) the housing of soldiers', '4) against excessive bail, fines, and punishments'],
 			theAnswer: 1 }
 		,
 		{	theQuestion: 'what is the Fith Amendment about?',
-			options: ['1) self-incirimination', '2) bearing arms', '3) the housing of soldiers', '4) jury nullification'],
+			options: ['1) against self-incirimination', '2) bearing arms', '3) against housing of soldiers', '4) jury nullification'],
 			theAnswer: 0 }
 	]
 
